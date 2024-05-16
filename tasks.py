@@ -202,6 +202,7 @@ class TaskPrompts():
   def store_page_content():
     return dedent("""
           Given an output from the HTML engineer, you must extract the html content and the css content, and separate them. 
+          The HTML content will be preceded by a comment containing 'index.html', and the CSS content will be preceded by a comment containing 'styles.css'. Use this to separate the HTML and CSS
           You must ensure that the html content is surrounded by the <html> tags, and the css content should be surrounded by the <style> tags. 
           You must ensure that there are no trailing \\n or \\r characters in the output
           You must ensure the output is correctly formatted to be a json array

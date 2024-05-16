@@ -21,7 +21,8 @@ os.environ['SERPER_API_KEY'] = '9bd11608103c6a824b47c816c2158c96ef54125f'
 os.environ['OPENAI_API_BASE'] = 'https://api.groq.com/openai/v1'
 os.environ['OPENAI_API_KEY'] = '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'
 
-llm = ChatOpenAI(model='llama3-8b-8192', openai_api_key='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') # Loading GPT-3.5
+llm = ChatOpenAI(model='llama3-8b-8192', openai_api_key='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', temperature=0.7) # Loading GPT-3.5
+llm2 = ChatOpenAI(model='llama3-8b-8192', openai_api_key='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', temperature=0.2) # Loading GPT-3.5
 # llm = ChatOpenAI(
 #   model='crewai-llama2',
 #   base_url='http://localhost:11434/v1'
@@ -217,7 +218,7 @@ class LandingPageCrew():
     self.content_storer_agent = Agent(
           **storer_config,
           verbose=True,
-          llm=llm,
+          llm=llm2,
           tools=[
               # SearchTools.search_internet,
               # BrowserTools.scrape_and_summarize_website,
