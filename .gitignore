@@ -1,2 +1,7 @@
 .DS_Store
 poetry.lock
+workdir.zip
+tools/__pycache__/search_tools.cpython-311.pyc
+index.html
+workdir.zip
+workdir/index.html

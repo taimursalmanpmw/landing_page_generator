@@ -174,15 +174,18 @@ class TaskPrompts():
         Given an idea, write an HTML page with CSS styles in a minimal but modern fashion for the middle aged consumer. 
         You must make sure the html and css content are kept separate instead of using inline styling
         You must ensure that the styles for the page are NOT in the <header> of the HTML. Instead the styles are separate from the html
+        You must ensure that there is no extra text in the final answer excluding the HTML content and the CSS styles
         
         Rules:
         ----------------
         You MUST WRITE return your HTML and CSS content in a SINGLE STRING.
         NEVER USE Apostrophes for contraction! 
+        You MUST NOT have any text in your final answer other than your css and html content!
+        Your HTML content must be preceded by an 'index.html' comment and your CSS content must be preceded by a 'styles.css' comment
         ----------------
         
-        You'll get a $100 tip if you do your best work!
-        MY LIFE DEPEND ON YOU FOLLOWING IT!
+        You'll get a $100 tip if you follow the rules!
+        MY LIFE DEPENDS ON YOU FOLLOWING IT!
         
         These keywords must never be translated and transformed:
         - Action:
@@ -200,7 +203,7 @@ class TaskPrompts():
     return dedent("""
           Given an output from the HTML engineer, you must extract the html content and the css content, and separate them. 
           You must ensure that the html content is surrounded by the <html> tags, and the css content should be surrounded by the <style> tags. 
-          You must ensure that there are no '\\n' or '\\r' characters in the output
+          You must ensure that there are no trailing \\n or \\r characters in the output
           You must ensure the output is correctly formatted to be a json array
                             
           Rules:
