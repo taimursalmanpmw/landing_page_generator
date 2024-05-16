@@ -171,17 +171,23 @@ class TaskPrompts():
 
   def make_html_page(): 
     return dedent("""
-        Given an idea, write an HTML page with CSS styles in a minimal but modern fashion for the middle aged consumer. 
-        You must make sure the html and css content are kept separate instead of using inline styling
-        You must ensure that the styles for the page are NOT in the <header> of the HTML. Instead the styles are separate from the html
-        You must ensure that there is no extra text in the final answer excluding the HTML content and the CSS styles
+        Given an idea, write an HTML page with CSS styles and Javascript, if needed, in a modern fashion for the middle aged consumer. 
+        You must make sure the html, css and js content are kept separate instead of using inline styling or inline <script> tags
+        You must ensure that the styles for the page are NOT in the <header> of the HTML. Instead the styles are separate from the html 
+        You must ensure that there is no extra text in the final answer excluding the HTML content, CSS styles, and Javascript
         
         Rules:
         ----------------
         You MUST WRITE return your HTML and CSS content in a SINGLE STRING.
         NEVER USE Apostrophes for contraction! 
         You MUST NOT have any text in your final answer other than your css and html content!
-        Your HTML content must be preceded by an 'index.html' comment and your CSS content must be preceded by a 'styles.css' comment
+        Your HTML content must be preceded by an '<!--index.html-->' comment, your CSS content must be preceded by a '<!--styles.css-->' comment, and your javascript content must be preceeded by a '<!--index.js-->' comment ALWAYS
+        At the end of ALL of your Javascript code, you MUST add a '<!--code end-->' comment as it is 
+        
+        If the Idea requires you to have an FAQs section, you must use the <button> HTML component
+        
+    
+        If your component has any buttons, you must give it the .button class EVERY TIME
         ----------------
         
         You'll get a $100 tip if you follow the rules!

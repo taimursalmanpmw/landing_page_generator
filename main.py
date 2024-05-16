@@ -36,54 +36,28 @@ class LandingPageCrew():
 
   def run(self):
     # expanded_idea = self.__expand_idea()
+    expanded_idea = self.idea
     
     # components = self.__choose_template(self.idea)
     # self.__update_components(components, self.idea)
-    fileContent = self.__make_html_page(self.idea)
-    self.__store_page_content(fileContent)
+    fileContent = self.__make_html_page(expanded_idea)
+    processedContent = self.__processEngineerOutput(fileContent)
+    self.__store_page_content(processedContent)
 
   def __store_page_content(self, content):
-    htmlPath = './workdir/index.html'
-    cssPath = './workdir/styles.css'
-    
-    store_page_content = Task(
-        description=TaskPrompts.store_page_content().format(
-          file_content=content,
-          html_path=htmlPath,
-          css_path=cssPath
-        ),
-        agent=self.content_storer_agent
-      )
-  
-    crew = Crew(
-      agents=[self.content_storer_agent],
-      tasks=[store_page_content],
-    
-      verbose=False
-    )
-    
-    returnedData = crew.kickoff()
-    returnedData = returnedData.replace('\n', '').replace("```", "")
-    print('returned data is ', returnedData)
+    [htmlContent, cssContent, jsContent] = content
     
     try: 
-      jsonData = json.loads(returnedData)
-      print('json data is ', jsonData)
+      with open('workdir/index.html', "w") as f:
+        f.write(htmlContent)
       
-      if (jsonData):
-        print('----------------------------------------')
-        print(jsonData[0])
-        print('----------------------------------------')
-        print(jsonData[1])
-        print('----------------------------------------')
+      with open('workdir/styles.css', "w") as f:
+        f.write(cssContent)
         
-        with open('workdir/index.html', "w") as f:
-          f.write(jsonData[0])
-        
-        with open('workdir/styles.css', "w") as f:
-          f.write(jsonData[1].replace('<style>', '').replace('</style>', ''))
+      with open('workdir/index.js', "w") as f:
+        f.write(jsContent)
     except:
-      print('Error while extracting json')    
+      print('Error while storing data')    
 
 
   def __make_html_page(self, idea): 
@@ -100,7 +74,6 @@ class LandingPageCrew():
       verbose=True
     )
     fileOutput = crew.kickoff()
-    print('fileOutputFor the make html task is ', fileOutput);
     return fileOutput;
   
 
@@ -182,8 +155,8 @@ class LandingPageCrew():
       crew.kickoff()
 
   def __create_agents(self):
-    # idea_analyst_config = self.agents_config["senior_idea_analyst"]
-    # strategist_config = self.agents_config["senior_strategist"]
+    idea_analyst_config = self.agents_config["senior_idea_analyst"]
+    strategist_config = self.agents_config["senior_strategist"]
     developer_config = self.agents_config["senior_html_developer"]
     editor_config = self.agents_config["senior_content_editor"]
     storer_config = self.agents_config["senior_content_storer"]
@@ -192,6 +165,25 @@ class LandingPageCrew():
       root_dir='workdir',
       selected_tools=["read_file", "list_directory"]
     )
+
+    self.idea_analyst = Agent(
+      **idea_analyst_config,
+      verbose=True,
+      llm=llm,
+      tools=[
+        # SearchTools.search_internet,
+      ]
+    )
+
+    self.communications_strategist = Agent(
+        **strategist_config,
+        verbose=True,
+        llm=llm,
+        tools=[
+
+        ]
+      )
+
 
     self.html_developer = Agent(
       **developer_config,
@@ -202,7 +194,7 @@ class LandingPageCrew():
           # BrowserTools.scrape_and_summarize_website,
           # TemplateTools.learn_landing_page_options,
           # TemplateTools.copy_landing_page_template_to_project_folder,
-          FileTools.write_file
+          # FileTools.write_file
       ] + toolkit.get_tools()
     )
 
@@ -228,6 +220,40 @@ class LandingPageCrew():
           ]
         )
     
+  def __processEngineerOutput(self, content=""):
+    codeContent = content
+    
+    if (content.find('```') != -1):
+      codeStart = content.find('```')
+      codeEnd = content.rfind('```')
+      if codeEnd != -1 and codeEnd == codeStart:
+        return "Error"
+      codeContent = content[codeStart + 3: codeEnd]
+    
+    if ('<!--code end-->' in codeContent):
+      codeContent = codeContent[:codeContent.find('<!--code end-->')]
+    
+    htmlContent = ''
+    cssContent = ''
+    jsContent = ''
+    
+    if (codeContent.find('index.js') != -1):
+      jsStart = codeContent.rfind('<!--index.js-->')
+      jsContent = (codeContent[jsStart:])[len('<!--index.js-->'):]
+      codeContent = codeContent[:jsStart]
+    
+    if (codeContent.find('styles.css') != -1):
+      cssStart = codeContent.rfind('<!--styles.css-->')
+      cssContent = (codeContent[cssStart:])[len('<!--styles.css-->'):]
+      codeContent = codeContent[:cssStart]
+    
+    if (codeContent.find('index.html') != -1):
+      htmlStart = codeContent.rfind('<!--index.html-->')
+      htmlContent = (codeContent[htmlStart:])[len('<!--index.html-->'):]
+      codeContent = codeContent[:htmlStart]  
+
+    return [htmlContent, cssContent, jsContent]
+  
 
 if __name__ == "__main__":
   print("Welcome to Idea Generator")

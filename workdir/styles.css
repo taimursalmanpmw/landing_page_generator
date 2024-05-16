@@ -1,45 +1,61 @@
+
 body {
     font-family: Arial, sans-serif;
+    background-image: linear-gradient(to bottom, #964B00, #964B00);
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, sans-serif;
+    color: #964B00;
 }
 
-header h1 {
-    font-size: 24px;
+button {
+    background-color: #964B00;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #8B4513;
+}
+
+.accordion {
+    padding: 0;
+    margin: 0;
+}
+
+.accordion h2 {
+    font-size: 18px;
     font-weight: bold;
+    color: #964B00;
+    padding: 10px;
+}
+
+.accordion div {
+    padding: 10px;
+    border: 1px solid #964B00;
+    border-radius: 5px;
     margin-bottom: 10px;
 }
 
-article {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.accordion p {
+    font-size: 16px;
+    font-weight: normal;
+    color: #964B00;
+    padding: 5px;
 }
 
-article h2 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 20px;
+.accordion a {
+    text-decoration: none;
+    color: #964B00;
 }
 
-article p {
-    margin-bottom: 20px;
+.accordion a:hover {
+    color: #8B4513;
 }
 
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    clear: both;
-}
