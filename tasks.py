@@ -2,6 +2,8 @@ from textwrap import dedent
 
 
 class TaskPrompts():
+  
+  #region Non-code tasks
   def expand():
     return dedent("""
       THIS IS A GREAT IDEA! Analyze and expand it 
@@ -31,14 +33,16 @@ class TaskPrompts():
       THE DETAILS, You'll get a $100 tip if you do your best work!
     """)
 
+  #endregion
+  
   def choose_template():
     return dedent("""
       Learn the templates options choose and copy 
-      the one that suits the idea bellow the best, 
-      YOU MUST COPY, and then YOU MUST read the src/component 
+      the one that suits the idea below the best, 
+      YOU MUST COPY, and then YOU MUST read the index.html and any .css files 
       in the directory you just copied, to decide what 
       component files should be updated to make the 
-      landing page about the idea bellow.
+      landing page about the idea below.
       
       - YOU MUST READ THE DIRECTORY BEFORE CHOOSING THE FILES.      
       - YOU MUST NOT UPDATE any Pricing components.
@@ -51,11 +55,12 @@ class TaskPrompts():
       ----------
       {idea}
     """)
+    
+    
 
   def update_page():
     return dedent("""
-      READ the ./[chosen_template]/src/app/page.jsx OR
-      ./[chosen_template]/src/app/(main)/page.jsx (main with the parenthesis) 
+      READ the ./[chosen_template]/index.html
       to learn its content and then write an updated 
       version to the filesystem that removes any 
       section related components that are not in our 
@@ -69,20 +74,40 @@ class TaskPrompts():
       -----
       - NEVER ADD A FINAL DOT to the file content.
       - NEVER WRITE \\n (newlines as string) on the file, just the code.
-      - NEVER FORGET TO CLOSE THE FINAL BRACKET (}}) in the file.
       - NEVER USE COMPONENTS THAT ARE NOT IMPORTED.
       - ALL COMPONENTS USED SHOULD BE IMPORTED, don't make up components.
-      - Save the file as with `.jsx` extension.
+      - Save the file as with `.html` extension.
       - Return the same valid JSON list of the components your got.
 
       You'll get a $100 tip if you follow all the rules!
 
       Also update any necessary text to reflect this landing page
-      is about the idea bellow.
+      is about the idea below.
       
       IDEA 
       ----------
       {idea}
+    """)
+  
+  def update_page_content():
+    return dedent("""
+      A engineer will update the {component} (code below),
+      return a list of good options of texts to replace 
+      EACH INDIVIDUAL existing text on the component, 
+      the suggestion MUST be based on the idea bellow, 
+      and also MUST be similar in length with the original 
+      text, we need to replace ALL TEXT.
+      
+      NEVER USE Apostrophes for contraction! You'll get a $100 
+      tip if you do your best work!
+
+      IDEA 
+      -----
+      {expanded_idea}
+  
+      COMPONENT CONTENT
+      -----
+      {file_content}
     """)
 
   def component_content():
@@ -101,7 +126,7 @@ class TaskPrompts():
       -----
       {expanded_idea}
   
-      REACT COMPONENT CONTENT
+      COMPONENT CONTENT
       -----
       {file_content}
     """)
@@ -109,7 +134,7 @@ class TaskPrompts():
   def update_component():
     return dedent("""
       YOU MUST USE the tool to write an updated 
-      version of the react component to the file 
+      version of the component to the file 
       system in the following path: {component} 
       replacing the text content with the suggestions 
       provided.
@@ -182,12 +207,13 @@ class TaskPrompts():
         NEVER USE Apostrophes for contraction! 
         You MUST NOT have any text in your final answer other than your css and html content!
         Your HTML content must be preceded by an '<!--index.html-->' comment, your CSS content must be preceded by a '<!--styles.css-->' comment, and your javascript content must be preceeded by a '<!--index.js-->' comment ALWAYS
-        At the end of ALL of your Javascript code, you MUST add a '<!--code end-->' comment as it is 
+        At the end of ALL of your Javascript code, you MUST add a '<!--code end-->' comment.
         
-        If the Idea requires you to have an FAQs section, you must use the <button> HTML component
+        If the IDEA requires you to have an FAQs section, you must use the <button> HTML component.
+        If the IDEA requires you to use a complex structure like an accordion or a carousel, make sure to add appropriate Javascript as needed.
         
     
-        If your component has any buttons, you must give it the .button class EVERY TIME
+        If your component has any buttons, you must give it the .button class EVERY TIME.
         ----------------
         
         You'll get a $100 tip if you follow the rules!
@@ -202,7 +228,6 @@ class TaskPrompts():
         IDEA 
         -----
         {expanded_idea}
-                    
                   """)
     
   def store_page_content():
@@ -231,3 +256,30 @@ class TaskPrompts():
           ------
           """)
     # your HTML content in the ./workdir folder, in a file named index.html, and you must store your css content in the same folder, named styles.css
+    
+  def choose_template_designer():
+    return dedent("""
+      Learn the templates options which can be found in the ./templates folder by reading the templates in the folder. Choose and copy 
+      the one that suits the idea below the best. You can learn more about the templates in the config/templates.json folder 
+      YOU MUST COPY, and then YOU MUST read the index.html, any .css/.scss, and any .js files 
+      in the directory you just copied, to decide what 
+      component files should be updated to make the 
+      landing page about the idea below.
+      
+      - YOU MUST READ THE DIRECTORY BEFORE CHOOSING THE FILES.      
+      - YOU MUST NOT UPDATE any Pricing components.
+      - YOU MUST UPDATE ONLY the 4 most important components.
+      - YOU MUST CHOOSE ONLY ONE TEMPLATE out of all the templates
+      
+      Your final answer MUST be ONLY a JSON array of 
+      the .html, .scss/.css, and .js file paths that need to be updated.
+
+      FOLDER CONTAINING TEMPLATES
+      ----------------------
+      ./templates
+
+      IDEA 
+      ----------
+      {idea}
+    """)
+    

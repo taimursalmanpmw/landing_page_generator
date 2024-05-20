@@ -1,61 +1,52 @@
 
 body {
-    font-family: Arial, sans-serif;
-    background-image: linear-gradient(to bottom, #964B00, #964B00);
-    margin: 0;
-    padding: 0;
+  background-image: linear-gradient(to bottom, #964b00, #7e4c00);
+  font-family: "Open Sans", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: Arial, sans-serif;
-    color: #964B00;
+header {
+  background-color: #964b00;
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+article {
+  background-color: #964b00;
+  color: #fff;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+section {
+  background-color: #964b00;
+  color: #fff;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+h1, h2, h3 {
+  color: #fff;
 }
 
 button {
-    background-color: #964B00;
-    color: #FFFFFF;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #964b00;
+  color: #fff;
+  border: none;
+  padding: 0.5em;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
-.button:hover {
-    background-color: #8B4513;
-}
-
-.accordion {
-    padding: 0;
-    margin: 0;
-}
-
-.accordion h2 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #964B00;
-    padding: 10px;
-}
-
-.accordion div {
-    padding: 10px;
-    border: 1px solid #964B00;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.accordion p {
-    font-size: 16px;
-    font-weight: normal;
-    color: #964B00;
-    padding: 5px;
-}
-
-.accordion a {
-    text-decoration: none;
-    color: #964B00;
-}
-
-.accordion a:hover {
-    color: #8B4513;
+button:hover {
+  background-color: #7e4c00;
 }
 

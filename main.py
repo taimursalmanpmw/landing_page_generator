@@ -38,13 +38,15 @@ class LandingPageCrew():
     # expanded_idea = self.__expand_idea()
     expanded_idea = self.idea
     
-    # components = self.__choose_template(self.idea)
+    components = self.__choose_template(self.idea)
+    print('----------------------------------------------\nTesting, the components are', components)
     # self.__update_components(components, self.idea)
     fileContent = self.__make_html_page(expanded_idea)
     processedContent = self.__processEngineerOutput(fileContent)
     self.__store_page_content(processedContent)
 
   def __store_page_content(self, content):
+    print('-----------------------------------------\ninside store page contnet, the content is\n', content)
     [htmlContent, cssContent, jsContent] = content
     
     try: 
@@ -96,20 +98,23 @@ class LandingPageCrew():
 
   def __choose_template(self, expanded_idea):
     choose_template_task = Task(
-        description=TaskPrompts.choose_template().format(
+        description=TaskPrompts.choose_template_designer().format(
           idea=self.idea
         ),
-        agent=self.html_developer
+        agent=self.designer
     )
-    update_page = Task(
-      description=TaskPrompts.update_page().format(
-        idea=self.idea
-      ),
-      agent=self.html_developer
-    )
+    
+    # update_page = Task(
+    #   description=TaskPrompts.update_page().format(
+    #     idea=self.idea
+    #   ),
+    #   agent=self.html_developer
+    # )
     crew = Crew(
       agents=[self.html_developer],
-      tasks=[choose_template_task, update_page],
+      tasks=[choose_template_task,
+            #  update_page
+             ],
       verbose=True
     )
     components = crew.kickoff()
@@ -157,6 +162,7 @@ class LandingPageCrew():
   def __create_agents(self):
     idea_analyst_config = self.agents_config["senior_idea_analyst"]
     strategist_config = self.agents_config["senior_strategist"]
+    designer_config = self.agents_config["chief_designer"]
     developer_config = self.agents_config["senior_html_developer"]
     editor_config = self.agents_config["senior_content_editor"]
     storer_config = self.agents_config["senior_content_storer"]
@@ -183,6 +189,17 @@ class LandingPageCrew():
 
         ]
       )
+    
+    self.designer = Agent(
+       **designer_config,
+        verbose=True,
+        llm=llm,
+        tools=[
+          TemplateTools.learn_landing_page_options,
+          TemplateTools.copy_landing_page_template_to_project_folder,
+        ] + toolkit.get_tools()
+      )
+
 
 
     self.html_developer = Agent(
@@ -194,7 +211,7 @@ class LandingPageCrew():
           # BrowserTools.scrape_and_summarize_website,
           # TemplateTools.learn_landing_page_options,
           # TemplateTools.copy_landing_page_template_to_project_folder,
-          # FileTools.write_file
+          FileTools.write_file
       ] + toolkit.get_tools()
     )
 
