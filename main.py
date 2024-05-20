@@ -196,7 +196,7 @@ class LandingPageCrew():
         llm=llm,
         tools=[
           TemplateTools.learn_landing_page_options,
-          TemplateTools.copy_landing_page_template_to_project_folder,
+          # TemplateTools.copy_landing_page_template_to_project_folder,
         ] + toolkit.get_tools()
       )
 

@@ -259,20 +259,15 @@ class TaskPrompts():
     
   def choose_template_designer():
     return dedent("""
-      Learn the templates options which can be found in the ./templates folder by reading the templates in the folder. Choose and copy 
-      the one that suits the idea below the best. You can learn more about the templates in the config/templates.json folder 
-      YOU MUST COPY, and then YOU MUST read the index.html, any .css/.scss, and any .js files 
-      in the directory you just copied, to decide what 
-      component files should be updated to make the 
-      landing page about the idea below.
+      Learn the templates options which can be found in the ./templates ˝folder by reading the templates in the folder. Choose the one that suits the idea below the best. You can learn more about the templates in the config/templates.json folder 
+    
       
       - YOU MUST READ THE DIRECTORY BEFORE CHOOSING THE FILES.      
       - YOU MUST NOT UPDATE any Pricing components.
       - YOU MUST UPDATE ONLY the 4 most important components.
       - YOU MUST CHOOSE ONLY ONE TEMPLATE out of all the templates
       
-      Your final answer MUST be ONLY a JSON array of 
-      the .html, .scss/.css, and .js file paths that need to be updated.
+      Your final answer MUST be the name of the template you have chosen
 
       FOLDER CONTAINING TEMPLATES
       ----------------------
