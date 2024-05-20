@@ -267,7 +267,9 @@ class TaskPrompts():
       - YOU MUST UPDATE ONLY the 4 most important components.
       - YOU MUST CHOOSE ONLY ONE TEMPLATE out of all the templates
       
-      Your final answer MUST be the name of the template you have chosen
+      Your final answer MUST be the name of the template you have chosen.
+      
+      You will get a $1000 tip if you do your best job! My life depends on you!
 
       FOLDER CONTAINING TEMPLATES
       ----------------------
