@@ -11,6 +11,7 @@ class TemplateTools():
   def learn_landing_page_options(input):
     """Learn the templates at your disposal"""
     templates = json.load(open("config/templates.json"))
+    print("-----------------------------------------------------------\nthe templates are\n", json.dumps(templates, indent=2), "\n----------------------------------------------------\n")
     return json.dumps(templates, indent=2)
 
   @tool("copy_landing_page_template_to_project_folder")

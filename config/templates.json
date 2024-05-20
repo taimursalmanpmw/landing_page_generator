@@ -1,8 +1,27 @@
 [
   {
-    "name": "Landing Page standard",
+    "name": "Laurel",
     "theme": "Landing page template",
-    "folder": "templates/sold",
+    "folder": "templates/laurel",
+    "description": "A simple website."
+  },
+  
+  {
+    "name": "Solid",
+    "theme": "Landing page template",
+    "folder": "templates/solid",
+    "description": "A simple website."
+  },
+  {
+    "name": "switch",
+    "theme": "Landing page template",
+    "folder": "templates/solid",
+    "description": "A simple website."
+  },
+  {
+    "name": "Venus",
+    "theme": "Landing page template",
+    "folder": "templates/venus",
     "description": "A simple website."
   }
 ]
