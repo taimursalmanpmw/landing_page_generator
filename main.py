@@ -39,11 +39,11 @@ class LandingPageCrew():
     expanded_idea = self.idea
     
     components = self.__choose_template(self.idea)
-    print('----------------------------------------------\nTesting, the components are', components)
+    print('----------------------------------------------\nTesting, the components are\n\n', components)
     # self.__update_components(components, self.idea)
-    fileContent = self.__make_html_page(expanded_idea)
-    processedContent = self.__processEngineerOutput(fileContent)
-    self.__store_page_content(processedContent)
+    # fileContent = self.__make_html_page(expanded_idea)
+    # processedContent = self.__processEngineerOutput(fileContent)
+    # self.__store_page_content(processedContent)
 
   def __store_page_content(self, content):
     print('-----------------------------------------\ninside store page contnet, the content is\n', content)
