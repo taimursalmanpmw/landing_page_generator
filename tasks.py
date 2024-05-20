@@ -260,14 +260,14 @@ class TaskPrompts():
   def choose_template_designer():
     return dedent("""
       Learn the templates options which can be found in the ./templates ˝folder by reading the templates in the folder. Choose the one that suits the idea below the best. You can learn more about the templates in the config/templates.json folder 
-    
-      
+  
       - YOU MUST READ THE DIRECTORY BEFORE CHOOSING THE FILES.      
-      - YOU MUST NOT UPDATE any Pricing components.
-      - YOU MUST UPDATE ONLY the 4 most important components.
       - YOU MUST CHOOSE ONLY ONE TEMPLATE out of all the templates
+      - YOU MUST NOT QUIT UNTIL YOU HAVE DECIDED ON A TEMPLATE
+      - YOU MUST INCLUDE YOUR REASONING FOR CHOOSING YOUR TEMPLATE
       
-      Your final answer MUST be the name of the template you have chosen.
+      
+      Your final answer MUST be the name of the template you have chosen. Your final answer will begin with your reasoning for choosing your template, and then you will add a <!-- template --> to your answer, and then write the name of the template. You MUST follow this format or I will fire you!
       
       You will get a $1000 tip if you do your best job! My life depends on you!
 

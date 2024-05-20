@@ -38,8 +38,15 @@ class LandingPageCrew():
     # expanded_idea = self.__expand_idea()
     expanded_idea = self.idea
     
-    components = self.__choose_template(self.idea)
-    print('----------------------------------------------\nTesting, the components are\n\n', components)
+    response = self.__choose_template(self.idea)
+    [reasoning, chosen_template] = self.__processDesignerOutput(response)
+    
+    with open('workdir/designer_reasoning.txt', 'w') as f:
+      f.write(reasoning)
+      
+    
+    
+    print('----------------------------------------------\nTesting, the components are\n\n', response)
     # self.__update_components(components, self.idea)
     # fileContent = self.__make_html_page(expanded_idea)
     # processedContent = self.__processEngineerOutput(fileContent)
@@ -61,7 +68,6 @@ class LandingPageCrew():
     except:
       print('Error while storing data')    
 
-
   def __make_html_page(self, idea): 
     make_html_page = Task(
         description=TaskPrompts.make_html_page().format(
@@ -78,7 +84,6 @@ class LandingPageCrew():
     fileOutput = crew.kickoff()
     return fileOutput;
   
-
   def __expand_idea(self):
     expand_idea_task = Task(
       description=TaskPrompts.expand().format(idea=self.idea),
@@ -117,8 +122,8 @@ class LandingPageCrew():
              ],
       verbose=True
     )
-    components = crew.kickoff()
-    return components
+    response = crew.kickoff()
+    return response
 
   def __update_components(self, components, expanded_idea):
     print('Debug log: the components are as follows', components)
@@ -271,6 +276,18 @@ class LandingPageCrew():
 
     return [htmlContent, cssContent, jsContent]
   
+  def __processDesignerOutput(self, content=""):
+    if content == "":
+      return content
+      
+    if ('<!-- template -->') in content:
+      reasoning = content[:content.find('<!-- template -->')]
+      chosen_template = content[content.find('<!-- template -->'):][len('<!-- template -->'):].strip()
+    
+    print('reasoning is \n', reasoning)
+    print('chosen template is \n', chosen_template)
+    
+    return [reasoning, chosen_template]
 
 if __name__ == "__main__":
   print("Welcome to Idea Generator")

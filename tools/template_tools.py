@@ -8,10 +8,10 @@ from langchain.tools import tool
 class TemplateTools():
 
   @tool("learn_landing_page_options")
-  def learn_landing_page_options(input):
+  def learn_landing_page_options():
     """Learn the templates at your disposal"""
     templates = json.load(open("config/templates.json"))
-    print("-----------------------------------------------------------\nthe templates are\n", json.dumps(templates, indent=2), "\n----------------------------------------------------\n")
+    # print("-----------------------------------------------------------\nthe templates are\n", json.dumps(templates, indent=2), "\n----------------------------------------------------\n")
     return json.dumps(templates, indent=2)
 
   @tool("copy_landing_page_template_to_project_folder")

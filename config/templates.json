@@ -3,25 +3,25 @@
     "name": "Laurel",
     "theme": "Landing page template",
     "folder": "templates/laurel",
-    "description": "A simple website."
+    "description": "A simple website for restaurants."
   },
-  
+
   {
-    "name": "Solid",
+    "name": "amer",
     "theme": "Landing page template",
     "folder": "templates/solid",
-    "description": "A simple website."
+    "description": "A simple website for chocolates."
   },
   {
     "name": "switch",
-    "theme": "Landing page template",
+    "theme": "Template for apple apps",
     "folder": "templates/solid",
-    "description": "A simple website."
+    "description": "A template to make an apple mac application."
   },
   {
     "name": "Venus",
     "theme": "Landing page template",
     "folder": "templates/venus",
-    "description": "A simple website."
+    "description": "A simple website for cars."
   }
 ]
