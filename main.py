@@ -48,7 +48,7 @@ class LandingPageCrew():
     
     print('----------------------------------------------\nTesting, the components are\n\n', response)
     # self.__update_components(components, self.idea)
-    # fileContent = self.__make_html_page(expanded_idea)
+    fileContent = self.__make_page_content(expanded_idea, chosen_template)
     # processedContent = self.__processEngineerOutput(fileContent)
     # self.__store_page_content(processedContent)
 
@@ -68,21 +68,36 @@ class LandingPageCrew():
     except:
       print('Error while storing data')    
 
-  def __make_html_page(self, idea): 
-    make_html_page = Task(
-        description=TaskPrompts.make_html_page().format(
-          expanded_idea=idea,
-        ),
-        agent=self.html_developer
+  def __make_page_content(self, idea, chosen_template= ""): 
+    # Generate a simple page
+    if (chosen_template == ""):
+      make_html_page = Task(
+          description=TaskPrompts.generate_html_page().format(
+            expanded_idea=idea,
+          ),
+          agent=self.html_developer
+        )
+      
+      crew = Crew(
+        agents=[self.html_developer],
+        tasks=[make_html_page],
+        verbose=True
       )
+      fileOutput = crew.kickoff()
+      return fileOutput
     
-    crew = Crew(
-      agents=[self.html_developer],
-      tasks=[make_html_page],
-      verbose=True
-    )
-    fileOutput = crew.kickoff()
-    return fileOutput;
+    # Use a template to fill out the page
+    
+    #Format the chosen template string
+    chosen_template = chosen_template.strip()
+    
+    # Copy the template into working directory
+    copytree(chosen_template, 'workdir/template')
+      
+      
+    
+    
+
   
   def __expand_idea(self):
     expand_idea_task = Task(
@@ -280,6 +295,9 @@ class LandingPageCrew():
     if content == "":
       return content
       
+    reasoning = ''
+    chosen_template = ''
+    
     if ('<!-- template -->') in content:
       reasoning = content[:content.find('<!-- template -->')]
       chosen_template = content[content.find('<!-- template -->'):][len('<!-- template -->'):].strip()
@@ -289,6 +307,19 @@ class LandingPageCrew():
     
     return [reasoning, chosen_template]
 
+
+def copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
+
+
+#main code
 if __name__ == "__main__":
   print("Welcome to Idea Generator")
   print(dedent("""

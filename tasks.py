@@ -194,7 +194,7 @@ class TaskPrompts():
       You'll get a $100 tip if you follow all the rules!
     """)
 
-  def make_html_page(): 
+  def generate_html_page(): 
     return dedent("""
         Given an idea, write an HTML page with CSS styles and Javascript, if needed, in a modern fashion for the middle aged consumer. 
         You must make sure the html, css and js content are kept separate instead of using inline styling or inline <script> tags
