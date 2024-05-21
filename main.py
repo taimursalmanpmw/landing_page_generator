@@ -198,7 +198,7 @@ class LandingPageCrew():
     self.designer = Agent(
        **designer_config,
         verbose=True,
-        llm=llm,
+        llm=llm2,
         tools=[
           TemplateTools.learn_landing_page_options,
           # TemplateTools.copy_landing_page_template_to_project_folder,

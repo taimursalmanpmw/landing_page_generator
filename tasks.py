@@ -259,21 +259,25 @@ class TaskPrompts():
     
   def choose_template_designer():
     return dedent("""
-      Learn the templates options which can be found in the ./templates ˝folder by reading the templates in the folder. Choose the one that suits the idea below the best. You can learn more about the templates in the config/templates.json folder 
+      Learn the templates options which can be found in the ./templates folder by reading the templates in the folder. Choose the one that suits the idea below the best. You can learn more about the templates in the config/templates.json folder 
   
       - YOU MUST READ THE DIRECTORY BEFORE CHOOSING THE FILES.      
       - YOU MUST CHOOSE ONLY ONE TEMPLATE out of all the templates
       - YOU MUST NOT QUIT UNTIL YOU HAVE DECIDED ON A TEMPLATE
-      - YOU MUST INCLUDE YOUR REASONING FOR CHOOSING YOUR TEMPLATE
+      - YOU MUST FOLLOW THE PROVDED FORMAT
       
+      You will get a $1000 tip if you do your best job! My life depends on you! You MUST follow this or I will fire you!
       
-      Your final answer MUST be the name of the template you have chosen. Your final answer will begin with your reasoning for choosing your template, and then you will add a <!-- template --> to your answer, and then write the name of the template. You MUST follow this format or I will fire you!
-      
-      You will get a $1000 tip if you do your best job! My life depends on you!
+      PROVIDED FORMAT:
+      ---------------------
+      Your final answer MUST be the folder of the template you have chosen. The folder of the template MUST be preceded by <!-- template -->. Your final answer will begin with your reasoning for choosing your template and why you didn't choose other options.
+      --------------------
 
-      FOLDER CONTAINING TEMPLATES
-      ----------------------
-      ./templates
+      An example of your output would be as follows:
+      [your reasoning for choosing a template]
+      <!-- template -->
+      [the folder of your chosen template]
+
 
       IDEA 
       ----------
