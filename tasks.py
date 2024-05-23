@@ -285,9 +285,18 @@ class TaskPrompts():
       - NEVER USE Apostrophes for contraction! 
       - DO NOT use ellipses to summarize any form of content
       - You must give a replacement suggestion for every line in the code! Even if there is no suggested replacement, just repeat the line
+      - DO NOT update the content of any scripts or CSS classes in the file. ONLY text content should be updated
+      - Do not ask for a confirmation before proceeding with your task
+      - Do not use 'and so on' for lines in the page. YOU MUST GIVE A REPLACEMENT FOR EVERY LINE IN THE FILE
+      - It cannot be stressed how important it is for you to have a replacement for each line in the file
+      - DO NOT USE ELLIPSES OR ANY TEXT TO SHORTEN YOUR OUTPUT. YOU MUST RETURN REPLACEMENTS FOR ALL OF THE LINES IN THE FILE
+      - Do not add or remove any classes in any of the HTML elements!
       
 
-      You'll get a $100 tip if you do your best work!
+      You'll get a $100 tip if you do your best work and follow the rules!
+      If you use 'and so on' in your output I will fire you
+      
+      Your final response must be an array of replacements ƒor each line in the file!
       
       IDEA 
       -----
@@ -318,14 +327,13 @@ class TaskPrompts():
       - ALL COMPONENTS USED SHOULD BE IMPORTED, don't make up components.
       - Save the file as with `.html` extension.
       - DO NOT use ellipses to summarize any form of content
-      - Use the gien replacement suggestions to update the content of the page
+      - Use the given replacement suggestions to update the content of the page
+      - Do not ask for a confirmation before proceeding with your task
+      - Do not modify any content enclosed in the <meta> or the <script> tags!
 
       If you follow the rules I'll give you a $100 tip!!! 
       MY LIFE DEPEND ON YOU FOLLOWING IT!
       
-      IDEA
-      -------------------
-      {idea}
       
       
       These keywords must never be translated and transformed:
@@ -337,7 +345,12 @@ class TaskPrompts():
     
   def update_template_content():
     return dedent("""
-      You must read the content of the index.html file in the ./workdir/template directory. Then only update the text content of the html file given the idea. YOU MUST NOT CHANGE THE STRUCTURE OF THE HTML PAGE. The ONLY thing you will change is the text content in all of the html tags. NOTHING ELSE. Make suer you update the same file and not create a new one!
+      You must read the content of the index.html file in the ./workdir/template directory. Then only update the text content of the html file given the idea. YOU MUST NOT CHANGE THE STRUCTURE OF THE HTML PAGE. The ONLY thing you will change is the text content in all of the html tags. NOTHING ELSE. 
+      
+      
+      
+      Make sure you update the same file and not create a new one!
+      Do not modify any content enclosed in the <head> tags!
                   
       IDEA
       ----------------

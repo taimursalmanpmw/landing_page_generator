@@ -24,6 +24,7 @@ os.environ['OPENAI_API_KEY'] = 'gsk_9JPrDuQoYvm3ufEcypy7WGdyb3FY0z1dW7RSujgOG7lz
 
 llm = ChatOpenAI(model='llama3-8b-8192', openai_api_key='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', temperature=0.7) # Loading GPT-3.5
 llm2 = ChatOpenAI(model='llama3-8b-8192', openai_api_key='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', temperature=0.2) # Loading GPT-3.5
+llm3 = ChatOpenAI(model='llama3-8b-8192', openai_api_key='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', temperature=0.7) # Loading GPT-3.5
 # llm = ChatOpenAI(
 #   model='crewai-llama2',
 #   base_url='http://localhost:11434/v1'
@@ -268,7 +269,7 @@ class LandingPageCrew():
     self.html_developer = Agent(
       **developer_config,
       verbose=True,
-      llm=llm,
+      llm=llm3,
       tools=[
           # SearchTools.search_internet,
           # BrowserTools.scrape_and_summarize_website,
