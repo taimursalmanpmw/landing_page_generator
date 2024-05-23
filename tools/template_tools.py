@@ -24,12 +24,13 @@ class TemplateTools():
     destination_path.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(source_path, destination_path)
     return f"Template copied to {landing_page_template} and ready to be modified, main files should be under ./{landing_page_template}/src/components, you should focus on those."
-
   
   @tool("read_template_contents_html")
-  def read_template_contents_html(path):
-    """Learn the contents of the index.html file in """
-    with open(path, 'r') as f:
+  def read_template_contents_html():
+    """Learn the contents of the index.html file in the templates folder"""
+    with open('./workdir/template/index.html', 'r') as f:
       template_html = f.read()
+      
+    print('\n------------------------\nTHE CONTENT OF THE FILE IS ', template_html)
       
     return template_html

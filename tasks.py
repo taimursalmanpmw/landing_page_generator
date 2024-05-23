@@ -275,17 +275,20 @@ class TaskPrompts():
       
   def suggest_replacements():
     return dedent("""
-      You will read the ./template/index.html file and return a list of good options of texts to replace EACH INDIVIDUAL existing text in the file, the suggestion MUST be based on the idea below, and also MUST be similar in length with the original text, we need to replace ALL TEXT. 
+      You will read the ./workdir/template/index.html file and return a list of good options of texts to replace EACH INDIVIDUAL existing text in the file, the suggestion MUST be based on the idea below, and also MUST be similar in length with the original text, we need to replace ALL TEXT. 
       YOU MUST USE A TOOL TO READ THE CONTENT OF THE TEMPLATE FIRST, AND THEN SUGGEST ANY REPLACEMENTS.
       Your response must be a list of replacement suggestions for each line in the file
       
       
       RULES:
       ------
-      NEVER USE Apostrophes for contraction! You'll get a $100 tip if you do your best work!
-      DO NOT use ellipses to summarize any form of content
+      - NEVER USE Apostrophes for contraction! 
+      - DO NOT use ellipses to summarize any form of content
+      - You must give a replacement suggestion for every line in the code! Even if there is no suggested replacement, just repeat the line
       
 
+      You'll get a $100 tip if you do your best work!
+      
       IDEA 
       -----
       {idea}
@@ -299,12 +302,10 @@ class TaskPrompts():
     
   def update_template_with_suggestions():
     return dedent("""
-      YOU MUST USE the tool to write an updated version of the component to the file system in the following path: ./workdir/template replacing the text content with the suggestions provided. YOU MUST USE THE EXISTING TEMPLATE, DO NOT GENERATE YOUR OWN STRUCTURE. You will do this by reading the index.html file in the ./workdir/template directory, and using the given suggestions to update the contents of index.html. DO NOT START FROM SCRATCH. YOU MUST USE THE GIVE TEMPLATE'S CONTENT.
+      YOU MUST USE the tool to write an updated version of the component to the file system in the following path: ./workdir/template replacing the text content with the suggestions provided. YOU MUST USE THE EXISTING TEMPLATE, DO NOT GENERATE YOUR OWN STRUCTURE. You will do this by reading the index.html file in the ./workdir/template directory, and using the given suggestions to update the contents of index.html. DO NOT START FROM SCRATCH. YOU MUST USE THE GIVEN TEMPLATE'S CONTENT.
       
       You only modify the text content, you don't add or remove any components.
-      
-      You first write the file then your final answer 
-      MUST be the updated component content.
+    
 
       RULES
       -----
@@ -317,6 +318,7 @@ class TaskPrompts():
       - ALL COMPONENTS USED SHOULD BE IMPORTED, don't make up components.
       - Save the file as with `.html` extension.
       - DO NOT use ellipses to summarize any form of content
+      - Use the gien replacement suggestions to update the content of the page
 
       If you follow the rules I'll give you a $100 tip!!! 
       MY LIFE DEPEND ON YOU FOLLOWING IT!
