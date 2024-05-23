@@ -284,13 +284,13 @@ class TaskPrompts():
       ------
       - NEVER USE Apostrophes for contraction! 
       - DO NOT use ellipses to summarize any form of content
-      - You must give a replacement suggestion for every line in the code! Even if there is no suggested replacement, just repeat the line
-      - DO NOT update the content of any scripts or CSS classes in the file. ONLY text content should be updated
+      - You must give a replacement suggestion for every line in the code!
       - Do not ask for a confirmation before proceeding with your task
       - Do not use 'and so on' for lines in the page. YOU MUST GIVE A REPLACEMENT FOR EVERY LINE IN THE FILE
-      - It cannot be stressed how important it is for you to have a replacement for each line in the file
+      - YOU MUST HAVE a replacement for each line in the file
       - DO NOT USE ELLIPSES OR ANY TEXT TO SHORTEN YOUR OUTPUT. YOU MUST RETURN REPLACEMENTS FOR ALL OF THE LINES IN THE FILE
       - Do not add or remove any classes in any of the HTML elements!
+      - Do not replace any CSS classes in code, or any code inside the <meta> or <script> texts
       
 
       You'll get a $100 tip if you do your best work and follow the rules!
@@ -330,11 +330,12 @@ class TaskPrompts():
       - Use the given replacement suggestions to update the content of the page
       - Do not ask for a confirmation before proceeding with your task
       - Do not modify any content enclosed in the <meta> or the <script> tags!
+      - DO NOT CHANGE ANY CSS CLASSES IN THE CODE
 
       If you follow the rules I'll give you a $100 tip!!! 
       MY LIFE DEPEND ON YOU FOLLOWING IT!
       
-      
+      Your final answer must be the updated HTML from index.html
       
       These keywords must never be translated and transformed:
         - Action:
