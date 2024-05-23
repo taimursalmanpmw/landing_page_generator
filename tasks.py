@@ -35,6 +35,7 @@ class TaskPrompts():
 
   #endregion
   
+  #region choosing template
   def choose_template():
     return dedent("""
       Learn the templates options choose and copy 
@@ -55,9 +56,11 @@ class TaskPrompts():
       ----------
       {idea}
     """)
-    
-    
+  
+  #endregion
 
+  #region Dealing with the component(s)
+  
   def update_page():
     return dedent("""
       READ the ./[chosen_template]/index.html
@@ -88,34 +91,13 @@ class TaskPrompts():
       ----------
       {idea}
     """)
-  
-  def update_page_content():
-    return dedent("""
-      A engineer will update the {component} (code below),
-      return a list of good options of texts to replace 
-      EACH INDIVIDUAL existing text on the component, 
-      the suggestion MUST be based on the idea bellow, 
-      and also MUST be similar in length with the original 
-      text, we need to replace ALL TEXT.
-      
-      NEVER USE Apostrophes for contraction! You'll get a $100 
-      tip if you do your best work!
-
-      IDEA 
-      -----
-      {expanded_idea}
-  
-      COMPONENT CONTENT
-      -----
-      {file_content}
-    """)
-
+    
   def component_content():
     return dedent("""
       A engineer will update the {component} (code below),
       return a list of good options of texts to replace 
       EACH INDIVIDUAL existing text on the component, 
-      the suggestion MUST be based on the idea bellow, 
+      the suggestion MUST be based on the idea below, 
       and also MUST be similar in length with the original 
       text, we need to replace ALL TEXT.
       
@@ -193,6 +175,10 @@ class TaskPrompts():
 
       You'll get a $100 tip if you follow all the rules!
     """)
+
+  #endregion
+  
+  #region Custom added stuff:
 
   def generate_html_page(): 
     return dedent("""
@@ -274,13 +260,86 @@ class TaskPrompts():
       --------------------
 
       An example of your output would be as follows:
+      <Example begins here:>
       [your reasoning for choosing a template]
       <!-- template -->
       [the folder of your chosen template]
-
+      <Example ends here>
+      
+      MAKE SURE YOU FOLLOW THE FORMAT!
 
       IDEA 
       ----------
       {idea}
     """)
+      
+  def suggest_replacements():
+    return dedent("""
+      You will read the ./template/index.html file and return a list of good options of texts to replace EACH INDIVIDUAL existing text in the file, the suggestion MUST be based on the idea below, and also MUST be similar in length with the original text, we need to replace ALL TEXT. 
+      YOU MUST USE A TOOL TO READ THE CONTENT OF THE TEMPLATE FIRST, AND THEN SUGGEST ANY REPLACEMENTS.
+      Your response must be a list of replacement suggestions for each line in the file
+      
+      
+      RULES:
+      ------
+      NEVER USE Apostrophes for contraction! You'll get a $100 tip if you do your best work!
+      DO NOT use ellipses to summarize any form of content
+      
+
+      IDEA 
+      -----
+      {idea}
+      
+      These keywords must never be translated and transformed:
+        - Action:
+        - Thought:
+        - Action Input:
+          because they are part of the thinking process instead of the output.
+    """)
     
+  def update_template_with_suggestions():
+    return dedent("""
+      YOU MUST USE the tool to write an updated version of the component to the file system in the following path: ./workdir/template replacing the text content with the suggestions provided. YOU MUST USE THE EXISTING TEMPLATE, DO NOT GENERATE YOUR OWN STRUCTURE. You will do this by reading the index.html file in the ./workdir/template directory, and using the given suggestions to update the contents of index.html. DO NOT START FROM SCRATCH. YOU MUST USE THE GIVE TEMPLATE'S CONTENT.
+      
+      You only modify the text content, you don't add or remove any components.
+      
+      You first write the file then your final answer 
+      MUST be the updated component content.
+
+      RULES
+      -----
+      - Remove all the links, this should be single page landing page.
+      - Don't make up images, videos, gifs, icons, logos, etc.
+      - keep the same style and tailwind classes.
+      - href in buttons, links, NavLinks, and navigations should be `#`.
+      - NEVER WRITE \\n (newlines as string) on the file, just the code.
+      - Keep the same component imports and don't use new components.
+      - ALL COMPONENTS USED SHOULD BE IMPORTED, don't make up components.
+      - Save the file as with `.html` extension.
+      - DO NOT use ellipses to summarize any form of content
+
+      If you follow the rules I'll give you a $100 tip!!! 
+      MY LIFE DEPEND ON YOU FOLLOWING IT!
+      
+      IDEA
+      -------------------
+      {idea}
+      
+      
+      These keywords must never be translated and transformed:
+        - Action:
+        - Thought:
+        - Action Input:
+          because they are part of the thinking process instead of the output.
+      """)
+    
+  def update_template_content():
+    return dedent("""
+      You must read the content of the index.html file in the ./workdir/template directory. Then only update the text content of the html file given the idea. YOU MUST NOT CHANGE THE STRUCTURE OF THE HTML PAGE. The ONLY thing you will change is the text content in all of the html tags. NOTHING ELSE. Make suer you update the same file and not create a new one!
+                  
+      IDEA
+      ----------------
+      {idea}       
+    """)
+
+#endregion

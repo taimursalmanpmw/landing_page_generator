@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import glob
 from textwrap import dedent
 
 from crewai import Agent, Crew, Task
@@ -44,11 +45,9 @@ class LandingPageCrew():
     with open('workdir/designer_reasoning.txt', 'w') as f:
       f.write(reasoning)
       
-    
-    
-    print('----------------------------------------------\nTesting, the components are\n\n', response)
     # self.__update_components(components, self.idea)
-    fileContent = self.__make_page_content(expanded_idea, chosen_template)
+    someContent = self.__replace_page_content(expanded_idea, chosen_template)
+    # fileContent = self.__make_page_content(expanded_idea, chosen_template)
     # processedContent = self.__processEngineerOutput(fileContent)
     # self.__store_page_content(processedContent)
 
@@ -70,6 +69,7 @@ class LandingPageCrew():
 
   def __make_page_content(self, idea, chosen_template= ""): 
     # Generate a simple page
+    print('----------------------\n chosen tempalte is ', chosen_template)
     if (chosen_template == ""):
       make_html_page = Task(
           description=TaskPrompts.generate_html_page().format(
@@ -88,17 +88,59 @@ class LandingPageCrew():
     
     # Use a template to fill out the page
     
-    #Format the chosen template string
-    chosen_template = chosen_template.strip()
+    update_template_content = Task(
+      description=TaskPrompts.update_template_content().format(
+        idea=idea
+      ),
+      agent=self.template_updater
+    )
     
-    # Copy the template into working directory
-    copytree(chosen_template, 'workdir/template')
-      
-      
+    crew = Crew(
+        agents=[self.template_updater],
+        tasks=[update_template_content],
+        verbose=True
+      )
+    
+    agentOutput = crew.kickoff()
+    return agentOutput
+    
+  def __replace_page_content(self, idea, chosen_template=""):
+    if (chosen_template == ""):
+      print('Error in choosing the template :design:')
+      return
     
     
-
+    suggest_replacements = Task(
+      description=TaskPrompts.suggest_replacements().format(
+        idea=idea
+      ),
+      agent=self.html_developer,
+      tools= [
+        TemplateTools.read_template_contents_html,
+      ],
+    )
+    
+    
+    update_template_with_suggestions = Task(
+      description=TaskPrompts.update_template_with_suggestions().format(
+        idea=idea,
+      ),
+      tools= [
+        TemplateTools.read_template_contents_html,
+      ],
+      agent=self.html_developer
+    )
+    
   
+    crew = Crew(
+        agents=[self.template_updater],
+        tasks=[suggest_replacements, update_template_with_suggestions],
+        verbose=True
+      )
+    
+    agentOutput = crew.kickoff()
+    return agentOutput
+    
   def __expand_idea(self):
     expand_idea_task = Task(
       description=TaskPrompts.expand().format(idea=self.idea),
@@ -131,7 +173,7 @@ class LandingPageCrew():
     #   agent=self.html_developer
     # )
     crew = Crew(
-      agents=[self.html_developer],
+      agents=[self.designer],
       tasks=[choose_template_task,
             #  update_page
              ],
@@ -186,6 +228,7 @@ class LandingPageCrew():
     developer_config = self.agents_config["senior_html_developer"]
     editor_config = self.agents_config["senior_content_editor"]
     storer_config = self.agents_config["senior_content_storer"]
+    template_updater_config = self.agents_config['senior_template_updater']
 
     toolkit = FileManagementToolkit(
       root_dir='workdir',
@@ -231,9 +274,26 @@ class LandingPageCrew():
           # BrowserTools.scrape_and_summarize_website,
           # TemplateTools.learn_landing_page_options,
           # TemplateTools.copy_landing_page_template_to_project_folder,
+          FileTools.write_file,
+          TemplateTools.read_template_contents_html
+      ] + toolkit.get_tools()
+    )
+    
+    self.template_updater = Agent(
+      **template_updater_config,
+      verbose=True,
+      llm=llm,
+      tools=[
+          # SearchTools.search_internet,
+          # BrowserTools.scrape_and_summarize_website,
+          # TemplateTools.learn_landing_page_options,
+          # TemplateTools.copy_landing_page_template_to_project_folder,
           FileTools.write_file
       ] + toolkit.get_tools()
     )
+    
+    
+    
 
     self.content_editor_agent = Agent(
       **editor_config,
@@ -305,10 +365,21 @@ class LandingPageCrew():
     print('reasoning is \n', reasoning)
     print('chosen template is \n', chosen_template)
     
+    if (chosen_template != ""):
+      chosen_template = chosen_template.strip()
+      # Copy the template into working directory
+      copytree(chosen_template, 'workdir/template')
+    
     return [reasoning, chosen_template]
 
 
 def copytree(src, dst, symlinks=False, ignore=None):
+  #Clear the existing directory out first
+    # files = glob.glob(dst + '/*')
+    # os.chmod(dst, 0o777)
+    # for f in files:
+    #     os.remove(f)
+  
     for item in os.listdir(src):
         s = os.path.join(src, item)
         d = os.path.join(dst, item)
@@ -316,8 +387,6 @@ def copytree(src, dst, symlinks=False, ignore=None):
             shutil.copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
-
-
 
 #main code
 if __name__ == "__main__":

@@ -25,3 +25,11 @@ class TemplateTools():
     shutil.copytree(source_path, destination_path)
     return f"Template copied to {landing_page_template} and ready to be modified, main files should be under ./{landing_page_template}/src/components, you should focus on those."
 
+  
+  @tool("read_template_contents_html")
+  def read_template_contents_html(path):
+    """Learn the contents of the index.html file in """
+    with open(path, 'r') as f:
+      template_html = f.read()
+      
+    return template_html
